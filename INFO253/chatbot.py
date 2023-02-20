@@ -14,9 +14,10 @@ def page_not_found(e):
 def handle_message():
     try:
         req = request.get_json()
-        if not req:
-            return jsonify({'error': 'No JSON data provided'}), 400
         msg = req['data']['message']
+
+        if not msg:
+            return jsonify({'error': 'No JSON data provided'}), 400
         if str(msg).startswith("/"):
             cmd, _, new_msg = msg.partition(' ')
             resp = {'command': cmd, 'message': new_msg}
@@ -24,7 +25,7 @@ def handle_message():
             resp = {'command': None, 'message': msg}
         
         return jsonify({"data": resp})
-    except ValueError as e:
+    except Exception as e:
         return jsonify({'error': str(e)}), 400
 
 
