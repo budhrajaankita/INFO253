@@ -20,7 +20,7 @@ def handle_message():
             return jsonify({'error': 'No JSON data provided'}), 400
         if str(msg).startswith("/"):
             cmd, _, new_msg = msg.partition(' ')
-            if cmd == "/":
+            if cmd == "/" or new_msg == "":
                 return jsonify({'error': 'Incorrect format for command'}), 400
             else:
                 resp = {'command': cmd, 'message': new_msg}
